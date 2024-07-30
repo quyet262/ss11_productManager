@@ -18,13 +18,30 @@ public class ProductServlet extends HttpServlet {
     private ProductService productService = new ProductServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "list";
+        }
+        switch (action) {
+            case "create":
+                createProduct(request, response);
+                break;
+            case "edit":
+                updateProduct(request, response);
+                break;
+            case "delete":
+                deleteProduct(request, response);
+                break;
+            default:
+                break;
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
-            action = "";
+            action = "list";
         }
         switch (action) {
             case "create":
